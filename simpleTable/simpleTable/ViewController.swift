@@ -25,6 +25,11 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         // Dispose of any resources that can be recreated.
     }
     
+    //隱藏狀態欄
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return restaurantNames.count
     }
@@ -33,6 +38,9 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
         cell.textLabel?.text = restaurantNames[indexPath.row]
+        cell.imageView?.image = UIImage(named: "0001242222")
+        
+        
         return cell
     }
     
