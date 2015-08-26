@@ -38,7 +38,16 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         let cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
         cell.textLabel?.text = restaurantNames[indexPath.row]
-        cell.imageView?.image = UIImage(named: "0001242222")
+//        cell.imageView?.image = UIImage(named: "0001242222")
+        
+        var i : Int = indexPath.row
+        if(i % 2 == 0)
+        {
+            cell.imageView?.image = UIImage(named: "0001242222")
+        }
+        else if(i % 2 != 0){
+            cell.imageView?.image = UIImage(named: "0001242268")
+        }
         
         
         return cell
