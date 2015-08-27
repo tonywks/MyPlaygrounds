@@ -48,9 +48,17 @@ class RestaurantTableTableViewController: UITableViewController {
         cell.thumbnailImageView?.image = UIImage(named:restaurantImages[indexPath.row])
         cell.thumbnailImageView.layer.cornerRadius = cell.thumbnailImageView.frame.size.width / 2
 //        cell.thumbnailImageView.layer.cornerRadius = 15.0
-//        cell.thumbnailImageView.clipsToBounds = true
-        
+        cell.thumbnailImageView.clipsToBounds = true
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let optionMenu = UIAlertController(title: nil, message: "What do you want to do?", preferredStyle: .ActionSheet)
+        let cancelAction = UIAlertAction(title: "cancel", style: .Cancel, handler: nil)
+        
+        optionMenu.addAction(cancelAction)
+        
+        self.presentViewController(optionMenu, animated: true, completion: nil)
     }
 
     
