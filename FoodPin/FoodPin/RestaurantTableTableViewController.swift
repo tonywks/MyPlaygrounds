@@ -69,31 +69,54 @@ class RestaurantTableTableViewController: UITableViewController {
         let callActionHandler = {
             (action:UIAlertAction!) -> Void in
             let alertMessage = UIAlertController(title: "Service Unavailable", message: "Sorry,the call feature is no available yet.", preferredStyle: .Alert)
-            
             alertMessage.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            
             self.presentViewController(alertMessage, animated: true, completion: nil)
         }
         
         let callAction = UIAlertAction(title: "Call"+"123-000-\(indexPath.row)", style: .Default, handler: callActionHandler)
-    
+        
         let isVisitAction = UIAlertAction(title: "I've been here", style: .Default, handler: {
             (action:UIAlertAction!) -> Void in
-            
             let cell = tableView.cellForRowAtIndexPath(indexPath)
             cell?.accessoryType = .Checkmark
             self.restaurantIsVisited[indexPath.row] = true
-            
         })
-        
+    
         optionMenu.addAction(isVisitAction)
         optionMenu.addAction(callAction)
         optionMenu.addAction(cancelAction)
-        
         self.presentViewController(optionMenu, animated: true, completion: nil)
-        
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if editingStyle == .Delete{
+            self.restaurantNames.removeAtIndex(indexPath.row)
+            self.restaurantImages.removeAtIndex(indexPath.row)
+            self.restaurantIsVisited.removeAtIndex(indexPath.row)
+            self.restaurantImages.removeAtIndex(indexPath.row)
+//            self.tableView.reloadData()
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
+        
+//        println("Total item:\(self.restaurantNames.count)")
+//        for name in restaurantNames{
+//            println(name)
+//        }
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
+        var shareAction = UITableViewRowAction(style: .Default, title: "Share", handler: {
+            (action:UITableViewRowAction!,indexPath:NSIndexPath!) -> Void in
+            let shareMenu = UIAlertController(title: nil, message: "share using", preferredStyle: .ActionSheet)
+            let twitterAction = UIAlertAction(title: "twitter", style: .Default, handler: nil)
+            let facebookAction = UIAlertAction(title: "facebook", style: .Default, handler: nil)
+            let emailAction = UIAlertAction(title: "email", style: .Default, handler: nil)
+            
+        })
+    }
+    
 
     
 
