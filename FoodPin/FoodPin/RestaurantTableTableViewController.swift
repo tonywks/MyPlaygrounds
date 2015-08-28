@@ -17,6 +17,8 @@ class RestaurantTableTableViewController: UITableViewController {
     
     var restaurantImages = ["1","2","3","4","5","1","2","3","4","5","1","2","3","4","5","1","2","3","4","5","1"]
     
+    var restaurantIsVisited = [Bool](count:21,repeatedValue:false)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -49,6 +51,14 @@ class RestaurantTableTableViewController: UITableViewController {
         cell.thumbnailImageView.layer.cornerRadius = cell.thumbnailImageView.frame.size.width / 2
 //        cell.thumbnailImageView.layer.cornerRadius = 15.0
         cell.thumbnailImageView.clipsToBounds = true
+        
+        if restaurantIsVisited[indexPath.row]{
+            cell.accessoryType = .Checkmark
+        }
+        else{
+            cell.accessoryType = .None
+        }
+        
         return cell
     }
     
@@ -56,9 +66,33 @@ class RestaurantTableTableViewController: UITableViewController {
         let optionMenu = UIAlertController(title: nil, message: "What do you want to do?", preferredStyle: .ActionSheet)
         let cancelAction = UIAlertAction(title: "cancel", style: .Cancel, handler: nil)
         
+        let callActionHandler = {
+            (action:UIAlertAction!) -> Void in
+            let alertMessage = UIAlertController(title: "Service Unavailable", message: "Sorry,the call feature is no available yet.", preferredStyle: .Alert)
+            
+            alertMessage.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            
+            self.presentViewController(alertMessage, animated: true, completion: nil)
+        }
+        
+        let callAction = UIAlertAction(title: "Call"+"123-000-\(indexPath.row)", style: .Default, handler: callActionHandler)
+    
+        let isVisitAction = UIAlertAction(title: "I've been here", style: .Default, handler: {
+            (action:UIAlertAction!) -> Void in
+            
+            let cell = tableView.cellForRowAtIndexPath(indexPath)
+            cell?.accessoryType = .Checkmark
+            self.restaurantIsVisited[indexPath.row] = true
+            
+        })
+        
+        optionMenu.addAction(isVisitAction)
+        optionMenu.addAction(callAction)
         optionMenu.addAction(cancelAction)
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
 
     
